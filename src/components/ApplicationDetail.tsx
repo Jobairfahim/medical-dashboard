@@ -36,7 +36,7 @@ function InfoRow({ icon, label, value }: InfoRowProps) {
   );
 }
 
-export function ApplicationDetail({ app, onBack }: ApplicationDetailProps) {
+export function ApplicationDetail({ onBack }: ApplicationDetailProps) {
   const [decision, setDecision] = useState<DecisionStatus>(null);
 
   const handleDecision = (status: "accepted" | "rejected") => {
@@ -73,8 +73,8 @@ export function ApplicationDetail({ app, onBack }: ApplicationDetailProps) {
           </div>
         )}
 
-        <div className="p-8">
-          <div className="grid grid-cols-2 gap-8">
+        <div className="p-6 sm:p-8">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 lg:gap-8">
             {/* Left column – student info */}
             <div>
               <div className="flex flex-col items-center mb-6 pb-6 border-b border-gray-100">
@@ -130,7 +130,7 @@ export function ApplicationDetail({ app, onBack }: ApplicationDetailProps) {
               {/* Submitted documents */}
               <div>
                 <p className="text-sm font-bold text-gray-800 mb-3">Submitted Documents</p>
-                <div className="grid grid-cols-2 gap-2.5">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
                   {DOCS.map((doc) => (
                     <div
                       key={doc.name}
@@ -168,12 +168,12 @@ export function ApplicationDetail({ app, onBack }: ApplicationDetailProps) {
           </div>
 
           {/* Action buttons */}
-          <div className="flex justify-end gap-3 mt-8 pt-6 border-t border-gray-100">
+          <div className="flex flex-col sm:flex-row justify-end gap-3 mt-8 pt-6 border-t border-gray-100">
             <button
               type="button"
               onClick={() => handleDecision("rejected")}
               disabled={decision !== null}
-              className={`flex items-center gap-2 px-5 py-2.5 rounded-xl text-sm font-semibold border transition-all disabled:opacity-60 disabled:cursor-not-allowed ${
+              className={`flex items-center justify-center gap-2 px-5 py-2.5 rounded-xl text-sm font-semibold border transition-all disabled:opacity-60 disabled:cursor-not-allowed w-full sm:w-auto ${
                 decision === "rejected"
                   ? "bg-red-500 text-white border-red-500"
                   : "border-red-300 text-red-500 hover:bg-red-50"
@@ -186,7 +186,7 @@ export function ApplicationDetail({ app, onBack }: ApplicationDetailProps) {
               type="button"
               onClick={() => handleDecision("accepted")}
               disabled={decision !== null}
-              className={`flex items-center gap-2 px-5 py-2.5 rounded-xl text-sm font-semibold shadow-md transition-all disabled:opacity-60 disabled:cursor-not-allowed ${
+              className={`flex items-center justify-center gap-2 px-5 py-2.5 rounded-xl text-sm font-semibold shadow-md transition-all disabled:opacity-60 disabled:cursor-not-allowed w-full sm:w-auto ${
                 decision === "accepted"
                   ? "bg-teal-600 text-white shadow-teal-200/50"
                   : "bg-teal-500 hover:bg-teal-600 text-white shadow-teal-200/50"

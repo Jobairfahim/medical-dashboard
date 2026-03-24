@@ -29,7 +29,7 @@ export function Placements() {
 
   return (
     <div className="max-w-4xl mx-auto">
-      <div className="flex items-center justify-between mb-5">
+      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-5">
         <h1 className="text-xl font-bold text-gray-800 flex items-center gap-2">
           <Icon path="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" className="w-5 h-5 text-teal-500" />
           Total Placements
@@ -37,7 +37,7 @@ export function Placements() {
         <button
           type="button"
           onClick={() => setShowModal(true)}
-          className="flex items-center gap-2 bg-teal-500 hover:bg-teal-600 text-white text-sm font-semibold px-4 py-2.5 rounded-xl shadow-md shadow-teal-200/50"
+          className="flex items-center justify-center gap-2 bg-teal-500 hover:bg-teal-600 text-white text-sm font-semibold px-4 py-2.5 rounded-xl shadow-md shadow-teal-200/50 w-full sm:w-auto"
         >
           <Icon path="M12 4v16m8-8H4" />
           Create Placement
@@ -45,15 +45,16 @@ export function Placements() {
       </div>
 
       <div className="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden">
-        <table className="w-full text-sm">
-          <thead className="bg-gray-50/70 border-b border-gray-100">
-            <tr>
-              {["Department", "Seats", "Duration", "Deadline", "Status", "Action"].map((h) => (
-                <th key={h} className="text-left px-5 py-3 text-xs font-semibold text-gray-400 uppercase tracking-wider">{h}</th>
-              ))}
-            </tr>
-          </thead>
-          <tbody>
+        <div className="overflow-x-auto">
+          <table className="w-full text-sm min-w-[600px]">
+            <thead className="bg-gray-50/70 border-b border-gray-100">
+              <tr>
+                {["Department", "Seats", "Duration", "Deadline", "Status", "Action"].map((h) => (
+                  <th key={h} className="text-left px-5 py-3 text-xs font-semibold text-gray-400 uppercase tracking-wider">{h}</th>
+                ))}
+              </tr>
+            </thead>
+            <tbody>
             {placements.map((p) => (
               <tr key={p.id} className="border-t border-gray-50 hover:bg-teal-50/30 group">
                 <td className="px-5 py-3.5 text-gray-700 font-medium">{p.dept}</td>
@@ -77,6 +78,7 @@ export function Placements() {
             ))}
           </tbody>
         </table>
+        </div>
       </div>
 
       {showModal && <PlacementModal onClose={() => setShowModal(false)} />}

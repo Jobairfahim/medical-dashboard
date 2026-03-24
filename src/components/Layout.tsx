@@ -27,12 +27,23 @@ interface LayoutProps {
 
 export function Layout({ children, currentPage, navigate }: LayoutProps) {
   const [search, setSearch] = useState("");
+  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const activeNav = currentPage === "application-detail" ? "applications" : currentPage;
 
   return (
     <div className="flex h-screen bg-gray-50 overflow-hidden">
+      {/* Mobile overlay */}
+      {isSidebarOpen && (
+        <div 
+          className="fixed inset-0 bg-black/50 z-40 lg:hidden"
+          onClick={() => setIsSidebarOpen(false)}
+        />
+      )}
+      
       {/* Sidebar */}
-      <aside className="w-64 bg-white border-r border-gray-100 flex flex-col py-6 px-4 flex-shrink-0 shadow-sm">
+      <aside className={`fixed lg:static inset-y-0 left-0 z-50 w-64 bg-white border-r border-gray-100 flex flex-col py-6 px-4 flex-shrink-0 shadow-sm transform transition-transform duration-300 ease-in-out ${
+        isSidebarOpen ? "translate-x-0" : "-translate-x-full lg:translate-x-0"
+      }`}>
         <Logo />
 
         <nav className="flex-1 space-y-1" aria-label="Main navigation">
@@ -65,25 +76,47 @@ export function Layout({ children, currentPage, navigate }: LayoutProps) {
           <Icon path="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
           Log Out
         </button>
+        
+        {/* Mobile close button */}
+        <button
+          type="button"
+          onClick={() => setIsSidebarOpen(false)}
+          className="lg:hidden absolute top-4 right-4 p-2 rounded-lg hover:bg-gray-100"
+          aria-label="Close sidebar"
+        >
+          <Icon path="M6 18L18 6M6 6l12 12" className="w-5 h-5 text-gray-500" />
+        </button>
       </aside>
 
       {/* Main area */}
       <div className="flex-1 flex flex-col overflow-hidden">
         {/* Top bar */}
-        <header className="bg-white border-b border-gray-100 px-8 py-4 flex items-center gap-6 z-10">
-          <div className="flex items-center gap-3 bg-gray-50 border border-gray-200 rounded-xl px-4 py-2.5 w-80 focus-within:border-teal-400 focus-within:ring-2 focus-within:ring-teal-100">
-            <Icon path="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" className="w-4 h-4 text-gray-400 flex-shrink-0" />
-            <input
-              type="search"
-              placeholder="Search students..."
-              className="bg-transparent text-sm outline-none text-gray-700 placeholder-gray-400 w-full"
-              value={search}
-              onChange={(e) => setSearch(e.target.value)}
-              aria-label="Search students"
-            />
+        <header className="bg-white border-b border-gray-100 px-4 sm:px-6 lg:px-8 py-4 flex items-center gap-4 lg:gap-6 z-10">
+          {/* Mobile menu button */}
+          <button
+            type="button"
+            onClick={() => setIsSidebarOpen(true)}
+            className="lg:hidden p-2 rounded-lg hover:bg-gray-100"
+            aria-label="Open sidebar"
+          >
+            <Icon path="M4 6h16M4 12h16M4 18h16" className="w-5 h-5 text-gray-500" />
+          </button>
+          
+          <div className="flex-1 lg:flex-none lg:w-80">
+            <div className="flex items-center gap-3 bg-gray-50 border border-gray-200 rounded-xl px-4 py-2.5 w-full focus-within:border-teal-400 focus-within:ring-2 focus-within:ring-teal-100">
+              <Icon path="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" className="w-4 h-4 text-gray-400 flex-shrink-0" />
+              <input
+                type="search"
+                placeholder="Search students..."
+                className="bg-transparent text-sm outline-none text-gray-700 placeholder-gray-400 w-full"
+                value={search}
+                onChange={(e) => setSearch(e.target.value)}
+                aria-label="Search students"
+              />
+            </div>
           </div>
 
-          <div className="ml-auto flex items-center gap-6">
+          <div className="ml-auto flex items-center gap-4 lg:gap-6">
             <button
               type="button"
               className="relative p-2 rounded-xl hover:bg-gray-50"
@@ -93,7 +126,7 @@ export function Layout({ children, currentPage, navigate }: LayoutProps) {
               <span className="absolute top-1.5 right-1.5 w-2 h-2 bg-red-500 rounded-full ring-2 ring-white" aria-hidden="true" />
             </button>
 
-            <div className="flex items-center gap-3">
+            <div className="hidden sm:flex items-center gap-3">
               <div className="text-right">
                 <p className="text-sm font-semibold text-gray-800 leading-tight">City Hospital</p>
                 <p className="text-xs text-gray-400">Hospital Id: 20394</p>
@@ -104,7 +137,7 @@ export function Layout({ children, currentPage, navigate }: LayoutProps) {
         </header>
 
         {/* Page content */}
-        <main className="flex-1 overflow-auto p-8" id="main-content">
+        <main className="flex-1 overflow-auto p-4 sm:p-6 lg:p-8" id="main-content">
           {children}
         </main>
       </div>

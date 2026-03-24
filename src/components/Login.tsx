@@ -24,9 +24,9 @@ export function Login({ onLogin }: LoginProps) {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-teal-50 via-white to-cyan-50 flex items-center justify-center p-4">
-      <div className="bg-white rounded-3xl shadow-2xl shadow-teal-100/60 flex overflow-hidden max-w-2xl w-full border border-gray-100">
+      <div className="bg-white rounded-3xl shadow-2xl shadow-teal-100/60 flex overflow-hidden max-w-2xl w-full border border-gray-100 flex-col md:flex-row">
         {/* Left panel */}
-        <div className="hidden md:block w-5/12 relative">
+        <div className="hidden lg:block w-5/12 relative">
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img
             src="/images/login.png"
@@ -42,7 +42,7 @@ export function Login({ onLogin }: LoginProps) {
         </div>
 
         {/* Right form */}
-        <div className="w-full md:w-7/12 p-8 flex flex-col justify-center">
+        <div className="w-full lg:w-7/12 p-6 sm:p-8 flex flex-col justify-center">
           {/* Logo
           <div className="flex items-center gap-2 mb-7">
             <div className="w-12 h-12">
@@ -50,7 +50,7 @@ export function Login({ onLogin }: LoginProps) {
             </div>
           </div> */}
 
-          <h1 className="text-2xl font-bold text-gray-900 mb-1.5">Welcome Back!</h1>
+          <h1 className="text-xl sm:text-2xl font-bold text-gray-900 mb-1.5">Welcome Back!</h1>
           <p className="text-gray-500 text-sm mb-7 leading-relaxed">
             This is your medical dashboard where you can manage your applications, track their status, and update your account information.
           </p>

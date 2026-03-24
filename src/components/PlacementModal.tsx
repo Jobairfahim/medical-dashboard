@@ -54,7 +54,7 @@ export function PlacementModal({ onClose }: PlacementModalProps) {
         </div>
 
         <form onSubmit={handleSubmit} className="px-6 py-5 space-y-4">
-          <div className="grid grid-cols-2 gap-4">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <div>
               <label htmlFor="dept" className="block text-sm font-medium text-gray-700 mb-1.5">Department <span className="text-red-400">*</span></label>
               <select
@@ -78,7 +78,7 @@ export function PlacementModal({ onClose }: PlacementModalProps) {
               <input id="startDate" type="date" value={startDate} onChange={(e) => setStartDate(e.target.value)}
                 className="w-full border border-gray-200 rounded-xl px-3 py-2.5 text-sm bg-gray-50 outline-none focus:border-teal-400 focus:ring-2 focus:ring-teal-100 text-gray-700" />
             </div>
-            <div className="grid grid-cols-2 gap-2">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
               <div>
                 <label htmlFor="duration" className="block text-xs font-medium text-gray-700 mb-1.5">Duration (Weeks) <span className="text-red-400">*</span></label>
                 <input id="duration" type="number" min="1" placeholder="e.g. 4" value={duration} onChange={(e) => setDuration(e.target.value)} required

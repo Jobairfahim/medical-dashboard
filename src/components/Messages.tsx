@@ -82,11 +82,11 @@ export function Messages() {
 
   return (
     <div
-      className="flex rounded-2xl overflow-hidden bg-white border border-gray-100 shadow-sm"
+      className="flex flex-col md:flex-row rounded-2xl overflow-hidden bg-white border border-gray-100 shadow-sm"
       style={{ height: "calc(100vh - 130px)" }}
     >
       {/* Contact sidebar */}
-      <aside className="w-64 border-r border-gray-100 flex flex-col flex-shrink-0">
+      <aside className="w-full md:w-64 border-r border-gray-100 flex flex-col flex-shrink-0">
         <div className="p-3 border-b border-gray-50">
           <div className="flex items-center gap-2 bg-gray-50 border border-gray-200 rounded-xl px-3 py-2 focus-within:border-teal-400 focus-within:ring-2 focus-within:ring-teal-100">
             <Icon
@@ -159,13 +159,8 @@ export function Messages() {
           </div>
         </div>
 
-        {/* Messages list */}
-        <div
-          className="flex-1 overflow-auto px-5 py-4 space-y-3"
-          role="log"
-          aria-live="polite"
-          aria-label="Chat messages"
-        >
+        {/* Messages area */}
+        <div className="flex-1 overflow-auto p-4 space-y-4" role="log" aria-live="polite" aria-label="Chat messages">
           {messages.map((msg) => (
             <div
               key={msg.id}
@@ -199,37 +194,69 @@ export function Messages() {
         </div>
 
         {/* Message input */}
-        <div className="px-4 py-3 border-t border-gray-100 flex items-center gap-3">
-          <input
-            type="text"
-            placeholder="Asked Anythings"
-            className="flex-1 bg-gray-50 border border-gray-200 rounded-full px-4 py-2.5 text-sm outline-none text-gray-700 placeholder-gray-400 focus:border-teal-400 focus:ring-2 focus:ring-teal-100"
-            value={input}
-            onChange={(e) => setInput(e.target.value)}
-            onKeyDown={handleKeyDown}
-            aria-label="Type a message"
-          />
-          <button
-            type="button"
-            className="p-2 text-gray-400 hover:text-teal-500 rounded-xl hover:bg-teal-50"
-            aria-label="Voice message"
-          >
-            <Icon
-              path="M19 11a7 7 0 01-7 7m0 0a7 7 0 01-7-7m7 7v4m0 0H8m4 0h4m-4-8a3 3 0 01-3-3V5a3 3 0 116 0v6a3 3 0 01-3 3z"
-              className="w-5 h-5"
+        <div className="p-4 border-t border-gray-100 bg-white">
+          <div className="flex items-center gap-2">
+            <input
+              type="text"
+              value={input}
+              onChange={(e) => setInput(e.target.value)}
+              onKeyDown={handleKeyDown}
+              placeholder="Type a message..."
+              className="flex-1 bg-gray-50 border border-gray-200 rounded-xl px-4 py-2.5 text-sm outline-none focus:border-teal-400 focus:ring-2 focus:ring-teal-100"
+              aria-label="Type a message"
             />
-          </button>
-          <button
-            type="button"
-            onClick={sendMessage}
-            disabled={!input.trim()}
-            className="w-10 h-10 bg-teal-500 hover:bg-teal-600 disabled:opacity-50 disabled:cursor-not-allowed text-white rounded-full flex items-center justify-center shadow-md shadow-teal-200/50 flex-shrink-0"
-            aria-label="Send message"
-          >
-            <Icon path="M12 19l9 2-9-18-9 18 9-2zm0 0v-8" className="w-4 h-4" />
-          </button>
+            <button
+              type="button"
+              onClick={sendMessage}
+              disabled={!input.trim()}
+              className="p-2.5 bg-teal-500 hover:bg-teal-600 disabled:opacity-50 disabled:cursor-not-allowed text-white rounded-xl transition-colors"
+              aria-label="Send message"
+            >
+              <Icon path="M12 19l9 2-9-18-9 18 9-2zm0 0v-8" className="w-4 h-4" />
+            </button>
+          </div>
         </div>
       </div>
+
+      {/* Mobile contact list overlay */}
+      {activeContact === null && (
+        <div className="md:hidden flex-1 flex flex-col">
+          <div className="p-4 border-b border-gray-50">
+            <div className="flex items-center gap-2 bg-gray-50 border border-gray-200 rounded-xl px-3 py-2 focus-within:border-teal-400 focus-within:ring-2 focus-within:ring-teal-100">
+              <Icon
+                path="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
+                className="w-4 h-4 text-gray-400 flex-shrink-0"
+              />
+              <input
+                type="search"
+                placeholder="Search Name..."
+                className="bg-transparent text-sm outline-none w-full placeholder-gray-400 text-gray-700"
+                value={contactSearch}
+                onChange={(e) => setContactSearch(e.target.value)}
+                aria-label="Search contacts"
+              />
+            </div>
+          </div>
+
+          <ul className="flex-1 overflow-auto" role="listbox" aria-label="Contacts">
+            {filteredContacts.map((contact) => (
+              <li key={contact.id} role="option" aria-selected={false}>
+                <button
+                  type="button"
+                  onClick={() => setActiveContact(contact.id)}
+                  className="w-full flex items-center gap-3 px-4 py-3 hover:bg-gray-50 text-left transition-colors"
+                >
+                  <Avatar size="w-9 h-9" />
+                  <div className="flex-1 min-w-0">
+                    <p className="font-medium text-gray-800 truncate">{contact.name}</p>
+                    <p className="text-sm text-gray-400 truncate">{contact.preview}</p>
+                  </div>
+                </button>
+              </li>
+            ))}
+          </ul>
+        </div>
+      )}
     </div>
   );
 }
